@@ -33,7 +33,7 @@ func main() {
 	batchSize := 1
 
 	// HTTP client for REST API calls
-	
+
 	client := &http.Client{
 		Timeout: 10 * time.Second,
 	}
@@ -48,7 +48,7 @@ func main() {
 
 		// Create channels for snapshots
 		// We'll use a raw snapshot channel which is fanned out to two separate channels: one for order book diff filtering and one for recording snapshots
-		
+
 		rawSnapshotCh := make(chan OrderBookSnapshot, 10)
 		snapshotDiffCh := make(chan OrderBookSnapshot, 10)
 		snapshotRecCh := make(chan OrderBookSnapshot, 10)
@@ -60,7 +60,7 @@ func main() {
 				snapshotRecCh <- snapshot
 			}
 		}()
-		
+
 		// Create Recorder instances for each market data type
 		tradeRecorder, err := NewRecorder(instrument, "trade", &Trade{}, batchSize)
 		if err != nil {
@@ -108,7 +108,7 @@ func main() {
 				cancel()
 			}
 		}(instrument)
-		
+
 		go func(inst string) {
 			if err := ListenAggTrade(ctx, inst, aggTradeCh); err != nil {
 				logger.Errorf("ListenAggTrade error for %s: %v", inst, err)
@@ -137,7 +137,7 @@ func main() {
 				cancel()
 			}
 		}(instrument)
-		
+
 		// Start subscription handlers to process incoming messages and record them
 		go SubscribeTrades(tradeCh, tradeRecorder, logger)
 		go SubscribeAggTrades(aggTradeCh, aggTradeRecorder, logger)

@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/xitongsys/parquet-go-source/local"
-	"github.com/xitongsys/parquet-go/writer"
 	"github.com/xitongsys/parquet-go/parquet"
+	"github.com/xitongsys/parquet-go/writer"
 )
 
 var NowFunc = time.Now
@@ -58,7 +58,7 @@ func NewRecorder(instrument string, dataType string, prototype interface{}, batc
 	}
 
 	pw.RowGroupSize = 128 * 1024 * 1024 // 128 MB
-	pw.PageSize = 8 * 1024             // 8 KB
+	pw.PageSize = 8 * 1024              // 8 KB
 	pw.CompressionType = parquet.CompressionCodec_SNAPPY
 
 	return &Recorder{
@@ -131,9 +131,9 @@ func (r *Recorder) rotate(newTime time.Time) error {
 		return err
 	}
 	pw.RowGroupSize = 128 * 1024 * 1024 // 128 MB
-	pw.PageSize = 8 * 1024             // 8 KB
+	pw.PageSize = 8 * 1024              // 8 KB
 	pw.CompressionType = parquet.CompressionCodec_SNAPPY
-	
+
 	lfConcrete, ok := lf.(*local.LocalFile)
 	if !ok {
 		lf.Close()
