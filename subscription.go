@@ -68,7 +68,6 @@ func SubscribeSnapshots(snapshotCh <-chan OrderBookSnapshot, recorder RecorderWr
 // SubscribeOrderBookDiff listens to the order book diff channel alongside the snapshot channel.
 // It applies filtering rules to ensure that outdated diff messages are discarded and sequence gaps trigger a new snapshot request.
 func SubscribeOrderBookDiff(diffCh <-chan OrderBookDiff, snapshotCh <-chan OrderBookSnapshot, diffRecorder RecorderWriter, snapshotRequest func(), logger LoggerInterface) {
-	snapshotRequest()
 	var lastSnapshotId int64 = 0
 	var lastProcessedId int64 = 0
 	for {

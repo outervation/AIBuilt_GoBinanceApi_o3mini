@@ -137,13 +137,13 @@ func main() {
 				cancel()
 			}
 		}(instrument)
-
 		// Start subscription handlers to process incoming messages and record them
 		go SubscribeTrades(tradeCh, tradeRecorder, logger)
 		go SubscribeAggTrades(aggTradeCh, aggTradeRecorder, logger)
 		go SubscribeBestPrice(bestPriceCh, bestPriceRecorder, logger)
 		go SubscribeSnapshots(snapshotRecCh, snapshotRecorder, logger)
 		go SubscribeOrderBookDiff(diffCh, snapshotDiffCh, diffRecorder, snapshotRequest, logger)
+		snapshotRequest()
 	}
 
 	// Wait for termination signal
